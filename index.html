@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Math 24 Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-area">
+        <div id="numbers">
+            <div class="number" id="num1"></div>
+            <div class="number" id="num2"></div>
+            <div class="number" id="num3"></div>
+            <div class="number" id="num4"></div> 
+        </div> 
+
+        <input type="text" id="expression" placeholder="Your solution here...">
+        <button id="submit">Submit</button>
+
+        <div id="feedback"></div>
+    </div>
+    
+    <div id="controls">
+        <button id="new-game">New Game</button>
+        <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
+    </div>
+
+    <div id="score">
+        <p>Score: <span id="current-score">0</span></p>
+        <p>High Score: <span id="high-score">0</span></p>
+    </div>
+
+    <div id="how-to-play">
+        <h3>How to Play</h3>
+        <p>
+            The goal of the game is to use the four numbers shown and the basic operations (+, -, *, /) to create an expression that equals 24. 
+        </p>
+        <p>
+            Use parentheses to control the order of operations. For example, if the numbers are 3, 4, 6, and 2, a valid solution would be: (3 + 4) * (6 / 2) = 24
+        </p>
+        <p>Enter your solution in the input box and click "Submit" to check your answer.</p>
+    </div>
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
