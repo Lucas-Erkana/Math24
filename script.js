@@ -2,6 +2,7 @@
 let currentScore = 0;
 let highScore = 0; 
 let difficulty = "easy";
+let timerInterval;
 
 // Get references to DOM elements
 const num1 = document.getElementById("num1");
@@ -13,14 +14,13 @@ const submitButton = document.getElementById("submit");
 const feedback = document.getElementById("feedback");
 const currentScoreDisplay = document.getElementById("current-score");
 const highScoreDisplay = document.getElementById("high-score");
+const timeLeftDisplay = document.getElementById("time-left");
 
 // Function to generate a new puzzle
 function generatePuzzle() {
-  // Simplified puzzle generation (not guaranteed a solution)
-  // Replace with a more robust algorithm later
   const numbers = [];
   for (let i = 0; i < 4; i++) {
-    numbers.push(Math.floor(Math.random() * 9) + 1); // Numbers 1-10
+    numbers.push(Math.floor(Math.random() * 9) + 1);
   }
   
   num1.textContent = numbers[0];
@@ -28,8 +28,8 @@ function generatePuzzle() {
   num3.textContent = numbers[2];
   num4.textContent = numbers[3];
 
-  feedback.textContent = ""; // Clear previous feedback
-  expressionInput.value = ""; // Clear input field
+  feedback.textContent = ""; 
+  expressionInput.value = ""; 
 }
 
 // Function to check the user's solution (simplified)
@@ -38,14 +38,13 @@ function checkSolution() {
   try {
     const result = eval(userExpression);
     if (result === 24) {
-        console.log('correct')
       feedback.textContent = "Correct!";
       feedback.classList.remove("incorrect");
       feedback.classList.add("correct");
       currentScore++;
       currentScoreDisplay.textContent = currentScore;
       updateHighScore();
-      generatePuzzle(); // Generate a new puzzle
+      generatePuzzle();
     } else {
       feedback.textContent = "Incorrect. Try again!";
       feedback.classList.remove("correct");
@@ -62,13 +61,41 @@ function updateHighScore() {
   if (currentScore > highScore) {
     highScore = currentScore;
     highScoreDisplay.textContent = highScore;
-    // You could store this in localStorage to make it persistent
   }
+}
+
+// Function to start the game
+function startGame() {
+  generatePuzzle();
+  startTimer();
+}
+
+// Function to start the timer
+function startTimer() {
+  let timeLeft = 120;
+  timeLeftDisplay.textContent = timeLeft;
+  
+  timerInterval = setInterval(() => {
+    timeLeft--;
+    timeLeftDisplay.textContent = timeLeft;
+    if (timeLeft <= 0) {
+      clearInterval(timerInterval);
+      currentScore--;
+      currentScoreDisplay.textContent = currentScore;
+      alert("Time's up! 1 point deducted.");
+    }
+  }, 1000);
+}
+
+// Function to stop the timer
+function stopTimer() {
+  clearInterval(timerInterval);
 }
 
 // Event listeners
 submitButton.addEventListener("click", checkSolution);
 document.getElementById("new-game").addEventListener("click", generatePuzzle);
+document.getElementById("start-game").addEventListener("click", startGame);
 
 // Initial puzzle generation on page load
 generatePuzzle();
